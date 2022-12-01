@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract Me {
+contract Le {
     /*//////////////////////////////////////////////////////////////
                                  EVENTS
     //////////////////////////////////////////////////////////////*/
@@ -45,8 +45,8 @@ contract Me {
     //////////////////////////////////////////////////////////////*/
 
     constructor() {
-        name = "ME";
-        symbol = "Me";
+        name = "LE";
+        symbol = "le";
         decimals = 18;
 
         INITIAL_CHAIN_ID = block.chainid;
