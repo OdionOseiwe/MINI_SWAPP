@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import "./Pair.sol";
 
-contract PairFctory {
+contract PairFactory {
 
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;

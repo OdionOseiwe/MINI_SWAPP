@@ -19,9 +19,9 @@ contract Router {
         address to,
         uint amountAMin,
         uint amountBMin) public returns(uint amountA, uint amountB, uint liquidity){
-        if (MiniLibrary.pairFor(factory,tokenA, tokenB) == address(0)) {
-            IMini(factory).createPair(tokenA, tokenB);
-        }
+        // if (MiniLibrary.pairFor(factory,tokenA, tokenB) == address(0)) {
+        //     IMini(factory).createPair(tokenA, tokenB);
+        // }
         (uint reserveA, uint reserveB) = MiniLibrary.getReserves(factory, tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
             (amountA, amountB) = (amountADesired, amountBDesired);
@@ -37,7 +37,7 @@ contract Router {
                 (amountA, amountB) = (amountAOptimal, amountBDesired);
             }
         }
-        address pair = MiniLibrary.pairFor(factory, tokenA, tokenB);
+        address pair = IMini(factory).createPair(tokenA, tokenB);
 
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
@@ -122,3 +122,18 @@ interface IPair{
 
     function swap(uint256 amount0Out, uint256 amount1Out, address to) external;
 }
+
+
+// forge create --rpc-url https://eth-goerli.g.alchemy.com/v2/0h4KWpjRd3xXNW50By-hTTaZDJnNpjiw \
+//     --private-key 6974ff09da21f8bc9e70bfe4cda2fd911502bc1eed1038e51c475f2f0d622cb8 src/PairFactory.sol:PairFactory \
+//     --etherscan-api-key Z8P4W843RDB83JD848SWFRI6JVVXGVM9KT \
+//     --compiler-version ^0.8.13
+//     --verify
+
+// $ forge create --rpc-url https://eth-goerli.g.alchemy.com/v2/0h4KWpjRd3xXNW50By-hTTaZDJnNpjiw --private-key 6974ff09da21f8bc9e70bfe4cda2fd911502bc1eed1038e51c475f2f0d622cb8 src/PairFctory.sol:PairFctory
+
+//     forge test -vvvvv --watch --run-all --fork-url https://eth-mainnet.g.alchemy.com/v2/0h4KWpjRd3xXNW50By-hTTaZDJnNpjiw --etherscan-api-key Z8P4W843RDB83JD848SWFRI6JVVXGVM9KT
+
+
+// forge verify-contract --chain-id 42 --num-of-optimizations 1000000 --watch 
+//     --compiler-version v0.8.10+commit.fc410830 <the_contract_address> src/MyToken.sol:MyToken <your_etherscan_api_key>

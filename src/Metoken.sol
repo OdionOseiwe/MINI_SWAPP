@@ -172,7 +172,7 @@ contract Me {
                         INTERNAL MINT/BURN LOGIC
     //////////////////////////////////////////////////////////////*/
 
-    function _mint(address to, uint256 amount) internal virtual {
+    function _mint(address to, uint256 amount) external virtual {
         totalSupply += amount;
 
         // Cannot overflow because the sum of all user
@@ -196,7 +196,7 @@ contract Me {
         emit Transfer(from, address(0), amount);
     }
 
-    function mints(address to, uint256 amount) external{
-        _mint(to,amount);
-    }
+    // function mints(address to, uint256 amount) external{
+    //     _mint(to,amount);
+    // }
 }

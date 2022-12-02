@@ -73,7 +73,7 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
 
     ///@dev mint function is called by the router when a user provides liquidty 
     ///@param to the address to mint the LP tokens to
-    function mint(address to) external  returns (uint liquidity) {
+    function mint(address to) public  returns (uint liquidity) {
         (uint _reserve0, uint _reserve1) = getReserves(); // gas savings
         uint balance0 = IERC202(token0).balanceOf(address(this));
         uint balance1 = IERC202(token1).balanceOf(address(this));
@@ -101,7 +101,7 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
 
     ///@dev burn is called by the router to remove liquidity
     ///@param to the address to sent the tokens the 
-    function burn(address to) external  returns (uint amount0, uint amount1) {
+    function burn(address to) public  returns (uint amount0, uint amount1) {
         address _token0 = token0;                                // gas savings
         address _token1 = token1;                                // gas savings
         uint balance0 = IERC202(_token0).balanceOf(address(this));
