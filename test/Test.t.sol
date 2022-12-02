@@ -47,43 +47,44 @@ contract Swaptest is Test {
         // lptoken = new LPtoken();
     }
 
-    function testDeployPairUSDTme() public{
-        //address pair = pairFactory.createPair(address(me), address(le));
-        vm.label(address(me),"me");
-        vm.label(address(router),"router");
-        vm.startPrank(USDTholder);
-        me._mint(USDTholder,1000e18);
-        //le.mints(user1, 1000e18);
-        uint balance = IERC2022(USDT).balanceOf(address(USDTholder));
-        uint balance2 = me.balanceOf(address(USDTholder));
-        emit log2(balance, "USDT holder balance");
-        emit log2(balance2, "ME holder balance");
-        me.approve(address(router), 100e18);
-        IERC2022(USDT).approve(address(router), 100e6);
-        router.addliquidity(address(me), address(USDT), 50000000000000000000, 50000000, USDTholder, 0, 0);
-       vm.stopPrank();
+    // function testDeployPairUSDTme() public{
+    //     //address pair = pairFactory.createPair(address(me), address(le));
+    //     vm.label(address(me),"me");
+    //     vm.label(address(router),"router");
+    //     vm.startPrank(USDTholder);
+    //     me._mint(USDTholder,1000e18);
+    //     //le.mints(user1, 1000e18);
+    //     uint balance = IERC2022(USDT).balanceOf(address(USDTholder));
+    //     uint balance2 = me.balanceOf(address(USDTholder));
+    //     emit log2(balance, "USDT holder balance");
+    //     emit log2(balance2, "ME holder balance");
+    //     me.approve(address(router), 100e18);
+    //     IERC2022(USDT).approve(address(router), 100e6);
+    //     router.addliquidity(address(me), address(USDT), 50000000000000000000, 50000000, USDTholder, 0, 0);
+    //    vm.stopPrank();
 
-    }
-    function testDeployPairHEXme() public{
-        //address pair = pairFactory.createPair(address(me), address(le));
-        vm.label(address(me),"me");
-        vm.label(address(router),"router");
-        vm.startPrank(HEXholder);
-        me._mint(HEXholder,1000e18);
-        //le.mints(user1, 1000e18);
-        uint balance = IERC2022(HEX).balanceOf(address(HEXholder));
-        uint balance2 = me.balanceOf(address(HEXholder));
-        emit log2(balance, "HEX holder balance");
-        emit log2(balance2, "ME holder balance");
-        me.approve(address(router), 100e18);
-        IERC2022(HEX).approve(address(router), 100e8);
-        router.addliquidity(address(me), address(HEX), 50000000000000000000, 5000000000, HEXholder, 0, 0);
-       vm.stopPrank();
+    // }
 
-    }
+    // function testDeployPairHEXme() public{
+    //     //address pair = pairFactory.createPair(address(me), address(le));
+    //     vm.label(address(me),"me");
+    //     vm.label(address(router),"router");
+    //     vm.startPrank(HEXholder);
+    //     me._mint(HEXholder,1000e18);
+    //     //le.mints(user1, 1000e18);
+    //     uint balance = IERC2022(HEX).balanceOf(address(HEXholder));
+    //     uint balance2 = me.balanceOf(address(HEXholder));
+    //     emit log2(balance, "HEX holder balance");
+    //     emit log2(balance2, "ME holder balance");
+    //     me.approve(address(router), 100e18);
+    //     IERC2022(HEX).approve(address(router), 100e8);
+    //     router.addliquidity(address(me), address(HEX), 50000000000000000000, 5000000000, HEXholder, 0, 0);
+    //    vm.stopPrank();
+
+    // }
 
     function testDeployPairleme() public{
-        //address pair = pairFactory.createPair(address(me), address(le));
+        //pairFactory.createPair(address(me), address(le));
         vm.label(address(me),"me");
         vm.label(address(le),"le");
         vm.label(address(router),"router");
@@ -97,24 +98,40 @@ contract Swaptest is Test {
         me.approve(address(router), 100e18);
         le.approve(address(router), 100e18);
         router.addliquidity(address(me), address(le) ,50000000000000000000, 50000000000000000000, user1, 0, 0);
-       vm.stopPrank();
+        //address pair =  MiniLibrary.pairFor(address(pairFactory), address(le), address(me));
+        //(uint256 reverse1, uint256 reverse2) = IERC2022(pair).getReserves();
+        //emit log2(reverse1 , "reverse1");
+        //emit log2(reverse2, "reserve2");
+        vm.stopPrank();
+        //////////////////////////////////////////////////// ADDING AND LIQUIDITY////////////////////////
+        vm.startPrank(user2);
+        me._mint(user2,1000e18);
+        le.mints(user2, 1000e18);
+        uint balance12 = le.balanceOf(address(user2));
+        uint balance22 = me.balanceOf(address(user2));
+        emit log2(balance12, "LE holder balance");
+        emit log2(balance22, "ME holder balance");
+        me.approve(address(router), 100e18);
+        le.approve(address(router), 100e18);
+        router.addliquidity(address(me), address(le) ,50000000000000000000, 50000000000000000000, user2, 0, 0);
+        vm.stopPrank();
 
     }
 
-    function testDeployPairDAIWETH() public{
-        //address pair = pairFactory.createPair(address(me), address(le));
-        vm.label(address(router),"router");
-        vm.startPrank(DAIholder);
-        uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
-        uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
-        emit log2(balance, "HEX holder balance");
-        emit log2(balance2, "ME holder balance");
-        IERC2022(WETH).approve(address(router), 100e18);
-        IERC2022(DAI).approve(address(router), 100e18);
-        router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
-       vm.stopPrank();
+    // function testDeployPairDAIWETH() public{
+    //     //address pair = pairFactory.createPair(address(me), address(le));
+    //     vm.label(address(router),"router");
+    //     vm.startPrank(DAIholder);
+    //     uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
+    //     uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
+    //     emit log2(balance, "HEX holder balance");
+    //     emit log2(balance2, "ME holder balance");
+    //     IERC2022(WETH).approve(address(router), 100e18);
+    //     IERC2022(DAI).approve(address(router), 100e18);
+    //     router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
+    //     vm.stopPrank();
 
-    }
+    // }
 
 
 
@@ -133,6 +150,7 @@ interface IERC2022{
         address to,
         uint256 amount
     ) external returns (bool);
+    function getReserves() external view returns (uint _reserve0, uint _reserve1);
 }
 
 //113,504,116.066158

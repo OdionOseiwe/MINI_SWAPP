@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "library/SafeMath.sol";
 import "src/LPtoken.sol";
+import "library/MiniLibrary.sol";
 
 contract Pair is LPtoken("LPtoken", "LP", 18) {
     using SafeMath  for uint;
@@ -128,6 +129,10 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
         (bool success, bytes memory data) = token.call(abi.encodeWithSelector(SELECTOR, to, value));
         require(success && (data.length == 0 || abi.decode(data, (bool))), 'UniswapV2: TRANSFER_FAILED');
     }
+
+    // function PairAddress() external returns(address){
+    //     return MiniLibrary.pairFor(factory, token0, token1);
+    // }
 }
 
 
