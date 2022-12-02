@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.0;
 
 import "library/MiniLibrary.sol";
 import "solidity-lib/libraries/TransferHelper.sol";
@@ -19,9 +19,9 @@ contract Router {
         address to,
         uint amountAMin,
         uint amountBMin) public returns(uint amountA, uint amountB, uint liquidity){
-        // if (MiniLibrary.pairFor(factory,tokenA, tokenB) == address(0)) {
-        //     IMini(factory).createPair(tokenA, tokenB);
-        // }
+        if (MiniLibrary.pairFor(factory,tokenA, tokenB) == address(0)) {
+            IMini(factory).createPair(tokenA, tokenB);
+        }
         (uint reserveA, uint reserveB) = MiniLibrary.getReserves(factory, tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
             (amountA, amountB) = (amountADesired, amountBDesired);

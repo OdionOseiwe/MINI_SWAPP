@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 import "../src/PairFactory.sol";
@@ -101,7 +101,7 @@ contract Swaptest is Test {
 
     }
 
-       function testDeployPairDAIWETH() public{
+    function testDeployPairDAIWETH() public{
         //address pair = pairFactory.createPair(address(me), address(le));
         vm.label(address(router),"router");
         vm.startPrank(DAIholder);
@@ -136,3 +136,7 @@ interface IERC2022{
 }
 
 //113,504,116.066158
+
+
+// forge verify-contract --chain-id 1 --num-of-optimizations 1000000 --watch
+//     --compiler-version v0.8.13+commit.fc410830 0xC294b6973A7110197590AB0011295BfD9f75EfeF src/PairFactory.sol:PairFactory Z8P4W843RDB83JD848SWFRI6JVVXGVM9KT
