@@ -130,9 +130,6 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
         require(success && (data.length == 0 || abi.decode(data, (bool))), 'UniswapV2: TRANSFER_FAILED');
     }
 
-    // function PairAddress() external returns(address){
-    //     return MiniLibrary.pairFor(factory, token0, token1);
-    // }
 }
 
 

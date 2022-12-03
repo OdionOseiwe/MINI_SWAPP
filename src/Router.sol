@@ -38,7 +38,6 @@ contract Router {
             }
         }
         address pair = MiniLibrary.pairFor(factory, tokenA, tokenB);
-
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IPair(pair).mint(to);
@@ -66,7 +65,7 @@ contract Router {
         require(amountB >= amountBMin, 'Router: INSUFFICIENT_B_AMOUNT');
     }
 
-        function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
+    function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
             (address token0,) = MiniLibrary.sortTokens(input, output);
@@ -78,6 +77,7 @@ contract Router {
             );
         }
     }
+
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
@@ -91,6 +91,7 @@ contract Router {
         );
         _swap(amounts, path, to);
     }
+
     function swapTokensForExactTokens(
         uint amountOut,
         uint amountInMax,
