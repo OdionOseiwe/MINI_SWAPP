@@ -44,7 +44,6 @@ contract Swaptest is Test {
         router = new Router(address(pairFactory));
         me = new Me();
         le = new Le();
-        // lptoken = new LPtoken();
     }
 
     // function testDeployPairUSDTme() public{
@@ -70,7 +69,6 @@ contract Swaptest is Test {
         vm.label(address(router),"router");
         vm.startPrank(HEXholder);
         me._mint(HEXholder,1000e18);
-        //le.mints(user1, 1000e18);
         uint balance = IERC2022(HEX).balanceOf(address(HEXholder));
         uint balance2 = me.balanceOf(address(HEXholder));
         emit log2(balance, "HEX holder balance");
