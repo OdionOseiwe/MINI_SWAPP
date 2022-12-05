@@ -76,7 +76,12 @@ contract Swaptest is Test {
         me.approve(address(router), 100e18);
         IERC2022(HEX).approve(address(router), 100e8);
         router.addliquidity(address(me), address(HEX), 50000000000000000000, 5000000000, HEXholder, 0, 0);
-       vm.stopPrank();
+        vm.stopPrank();
+        vm.startPrank(user1);
+        me._mint(user1,10e18);
+        me.approve(address(router), 10e18);
+        router.swapExactTokensForTokens(10, 1, [address(me), address(HEX)], address(user1));
+        vm.stopPrank();
     }
 
     function testDeployPairleme() public{
@@ -110,6 +115,8 @@ contract Swaptest is Test {
         emit log2(reversei , "reverse1");
         emit log2(reverseii, "reserve2");
         vm.stopPrank();
+        //////////////////////////////////////////SWAP TOKENS/////////////////////////////////////////
+
     }
 
     function testDeployPairDAIWETH() public{
