@@ -32,8 +32,8 @@ contract PairFactory {
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 
-    function pairAddress(address tokenA, address tokenB) external view returns(address){
-        return getPair[tokenA][tokenB];
+    function pairAddress(address tokenA, address tokenB) external view returns(address pair){
+        pair =  getPair[tokenA][tokenB];
     }
 }
 

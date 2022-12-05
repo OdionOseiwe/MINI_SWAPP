@@ -19,8 +19,8 @@ contract Router {
         address to,
         uint amountAMin,
         uint amountBMin) public returns(uint amountA, uint amountB, uint liquidity){
-       if ( MiniLibrary.pairFor(factory, tokenA, tokenB) == address(0)) {
-            IMini(factory).createPair(tokenA, tokenB);
+        if ( MiniLibrary.pairFor(factory, tokenA, tokenB) == address(0)) {
+            address pair = IMini(factory).createPair(tokenA, tokenB);
         }
         (uint reserveA, uint reserveB) = MiniLibrary.getReserves(factory, tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
@@ -37,10 +37,10 @@ contract Router {
                 (amountA, amountB) = (amountAOptimal, amountBDesired);
             }
         }
-        address pair = MiniLibrary.pairFor(factory, tokenA, tokenB);
-        TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
-        TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
-        liquidity = IPair(pair).mint(to);
+        address pair2 = MiniLibrary.pairFor(factory, tokenA, tokenB);
+        TransferHelper.safeTransferFrom(tokenA, msg.sender, pair2, amountA);
+        TransferHelper.safeTransferFrom(tokenB, msg.sender, pair2, amountB);
+        liquidity = IPair(pair2).mint(to);
 
     }
 
@@ -108,8 +108,8 @@ contract Router {
 }
 
 interface IMini{
-    function createPair(address tokenA, address tokenB) external returns (address pair);
-    function pairAddress(address tokenA, address tokenB) external returns(address);
+    function createPair(address tokenA, address tokenB) external returns (address);
+    function pairAddress(address tokenA, address tokenB) external returns(address );
 }
 
 interface IPair{
