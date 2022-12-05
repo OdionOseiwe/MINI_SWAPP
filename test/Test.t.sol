@@ -94,22 +94,21 @@ contract Swaptest is Test {
         me.approve(address(router), 100e18);
         le.approve(address(router), 100e18);
         router.addliquidity(address(me), address(le) ,50000000000000000000, 50000000000000000000, user1, 0, 0);
-        //address pair =  MiniLibrary.pairFor(address(pairFactory), address(le), address(me));
-        //(uint256 reverse1, uint256 reverse2) = IERC2022(pair).getReserves();
-        //emit log2(reverse1 , "reverse1");
-        //emit log2(reverse2, "reserve2");
+        address pair =  MiniLibrary.pairFor(address(pairFactory), address(le), address(me));
+        (uint256 reverse1, uint256 reverse2) = IERC2022(pair).getReserves();
+        emit log2(reverse1 , "reverse1");
+        emit log2(reverse2, "reserve2");
         vm.stopPrank();
         //////////////////////////////////////////////////// ADDING AND LIQUIDITY////////////////////////
         vm.startPrank(user2);
         me._mint(user2,1000e18);
         le.mints(user2, 1000e18);
-        uint balance12 = le.balanceOf(address(user2));
-        uint balance22 = me.balanceOf(address(user2));
-        emit log2(balance12, "LE holder balance");
-        emit log2(balance22, "ME holder balance");
         me.approve(address(router), 100e18);
         le.approve(address(router), 100e18);
         router.addliquidity(address(me), address(le) ,50000000000000000000, 50000000000000000000, user2, 0, 0);
+        (uint256 reversei, uint256 reverseii) = IERC2022(pair).getReserves();
+        emit log2(reversei , "reverse1");
+        emit log2(reverseii, "reserve2");
         vm.stopPrank();
     }
 

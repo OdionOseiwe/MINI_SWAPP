@@ -19,8 +19,8 @@ contract Router {
         address to,
         uint amountAMin,
         uint amountBMin) public returns(uint amountA, uint amountB, uint liquidity){
-        if ( MiniLibrary.pairFor(factory, tokenA, tokenB) == address(0)) {
-            address pair = IMini(factory).createPair(tokenA, tokenB);
+       if ( MiniLibrary.pairFor(factory, tokenA, tokenB) == address(0)) {
+            IMini(factory).createPair(tokenA, tokenB);
         }
         (uint reserveA, uint reserveB) = MiniLibrary.getReserves(factory, tokenA, tokenB);
         if (reserveA == 0 && reserveB == 0) {
@@ -108,7 +108,7 @@ contract Router {
 }
 
 interface IMini{
-    function createPair(address tokenA, address tokenB) external returns (address);
+    function createPair(address tokenA, address tokenB) external returns (address pair);
     function pairAddress(address tokenA, address tokenB) external returns(address );
 }
 
