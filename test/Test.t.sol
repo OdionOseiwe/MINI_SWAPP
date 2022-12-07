@@ -119,19 +119,19 @@ contract Swaptest is Test {
 
     }
 
-    function testDeployPairDAIWETH() public{
-        address pair = pairFactory.createPair(address(WETH), address(DAI));
-        vm.label(address(router),"router");
-        vm.startPrank(DAIholder);
-        uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
-        uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
-        emit log2(balance, "HEX holder balance");
-        emit log2(balance2, "ME holder balance");
-        IERC2022(WETH).approve(address(router), 100e18);
-        IERC2022(DAI).approve(address(router), 100e18);
-        router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
-        vm.stopPrank();
-    }
+    // function testDeployPairDAIWETH() public{
+    //     address pair = pairFactory.createPair(address(WETH), address(DAI));
+    //     vm.label(address(router),"router");
+    //     vm.startPrank(DAIholder);
+    //     uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
+    //     uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
+    //     emit log2(balance, "HEX holder balance");
+    //     emit log2(balance2, "ME holder balance");
+    //     IERC2022(WETH).approve(address(router), 100e18);
+    //     IERC2022(DAI).approve(address(router), 100e18);
+    //     router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
+    //     vm.stopPrank();
+    // }
 
 
 
