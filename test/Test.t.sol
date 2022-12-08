@@ -63,6 +63,7 @@ contract Swaptest is Test {
     //     vm.stopPrank();
     // }
 
+    address[] paths = [address(me), address(HEX)];
     function testDeployPairHEXme() public{
         address pair = pairFactory.createPair(address(me), address(HEX));
         vm.label(address(me),"me");
@@ -80,7 +81,7 @@ contract Swaptest is Test {
         vm.startPrank(user1);
         me._mint(user1,10e18);
         me.approve(address(router), 10e18);
-        router.swapExactTokensForTokens(10, 1, [address(me), address(HEX)], address(user1));
+        router.swapExactTokensForTokens(10, 1,paths, address(user1));
         vm.stopPrank();
     }
 
@@ -119,19 +120,26 @@ contract Swaptest is Test {
 
     }
 
-    // function testDeployPairDAIWETH() public{
-    //     address pair = pairFactory.createPair(address(WETH), address(DAI));
-    //     vm.label(address(router),"router");
-    //     vm.startPrank(DAIholder);
-    //     uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
-    //     uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
-    //     emit log2(balance, "HEX holder balance");
-    //     emit log2(balance2, "ME holder balance");
-    //     IERC2022(WETH).approve(address(router), 100e18);
-    //     IERC2022(DAI).approve(address(router), 100e18);
-    //     router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
-    //     vm.stopPrank();
-    // }
+    address[] paths2 = [address(DAI), address(WETH)];
+
+    function testDeployPairDAIWETH() public{
+        address pair = pairFactory.createPair(address(WETH), address(DAI));
+        vm.label(address(router),"router");
+        vm.startPrank(DAIholder);
+        uint balance = IERC2022(WETH).balanceOf(address(DAIholder));
+        uint balance2 = IERC2022(DAI).balanceOf(address(DAIholder));
+        emit log2(balance, "HEX holder balance");
+        emit log2(balance2, "ME holder balance");
+        IERC2022(WETH).approve(address(router), 100e18);
+        IERC2022(DAI).approve(address(router), 100e18);
+        router.addliquidity(address(WETH), address(DAI), 50000000000000000000, 50000000000000000000, DAIholder, 0, 0);
+        vm.stopPrank();
+        ////////////////////////////////ADD LIQUIDITY///////////////////////////////
+        vm.startPrank(DAIholder);
+        IERC2022(DAI).approve(address(router), 10e18);
+        router.swapExactTokensForTokens(10, 1,paths2, address(DAIholder));
+        vm.stopPrank();
+    }
 
 
 

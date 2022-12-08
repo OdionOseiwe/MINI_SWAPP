@@ -58,7 +58,7 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
     ///@param  amount0Out is the amount of tokens in token0 to be given to the user
     ///@param  amount1Out is the amount of tokens in token1 to be given to the user
     ///@param to address to transfer tokens to
-    function swap(uint256 amount0Out, uint256 amount1Out, address to) internal {
+    function swap(uint256 amount0Out, uint256 amount1Out, address to) external {
         require(amount0Out > 0 || amount1Out > 0, 'Pair: INSUFFICIENT_OUTPUT_AMOUNT');
         (uint256  _token0, uint256 _token1)=getReserves();
         require(_token0 > amount0Out&& _token1 >amount1Out, "Pair: INSUFFICIENT FUNDS" );
@@ -74,7 +74,7 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
 
     ///@dev mint function is called by the router when a user provides liquidty 
     ///@param to the address to mint the LP tokens to
-    function mint(address to) public  returns (uint liquidity) {
+    function mint(address to) external  returns (uint liquidity) {
         (uint _reserve0, uint _reserve1) = getReserves(); // gas savings
         uint balance0 = IERC202(token0).balanceOf(address(this));
         uint balance1 = IERC202(token1).balanceOf(address(this));
@@ -102,7 +102,7 @@ contract Pair is LPtoken("LPtoken", "LP", 18) {
 
     ///@dev burn is called by the router to remove liquidity
     ///@param to the address to sent the tokens the 
-    function burn(address to) public  returns (uint amount0, uint amount1) {
+    function burn(address to) external  returns (uint amount0, uint amount1) {
         address _token0 = token0;                                // gas savings
         address _token1 = token1;                                // gas savings
         uint balance0 = IERC202(_token0).balanceOf(address(this));
