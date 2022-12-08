@@ -137,7 +137,15 @@ contract Swaptest is Test {
         ////////////////////////////////ADD LIQUIDITY///////////////////////////////
         vm.startPrank(DAIholder);
         IERC2022(DAI).approve(address(router), 10e18);
-        router.swapExactTokensForTokens(10, 1,paths2, address(DAIholder));
+        router.swapExactTokensForTokens(10e18, 1e18,paths2, address(DAIholder));
+        vm.stopPrank();
+        vm.startPrank(DAIholder);
+        IERC2022(DAI).approve(address(router), 20e18);
+        router.swapExactTokensForTokens(20e18, 1e18,paths2, address(DAIholder));
+        address pair2 =  MiniLibrary.pairFor(address(pairFactory), address(DAI), address(WETH));
+        (uint256 reverse1, uint256 reverse2) = IERC2022(pair2).getReserves();
+        emit log2(reverse1 , "reverse1");
+        emit log2(reverse2, "reserve2");
         vm.stopPrank();
     }
 
